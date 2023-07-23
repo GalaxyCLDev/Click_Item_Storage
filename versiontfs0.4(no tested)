@@ -1,5 +1,5 @@
 local siguienteTiempo = 120 -- ESTO ES EL TIEMPO QUE DURARA EL STORAGE (5 dias = 120 horas)
-local storage = 845620  --- este numero significa la identificacion que tendra el jugador por cierta cantidad de tiempo definida arriba
+local storage = 45000  --- este numero significa la identificacion que tendra el jugador por cierta cantidad de tiempo definida arriba
 
 function onUse(player, item, fromPos, target, toPos, isHotkey)  --- funciona USAR(hacerclick)
     local lastAccess = player:getStorageValue(storage)
