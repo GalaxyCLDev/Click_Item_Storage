@@ -1,16 +1,16 @@
 local siguienteTiempo = 120 -- ESTO ES EL TIEMPO QUE DURARA EL STORAGE (5 dias = 120 horas)
 local storage = 845620  --- este numero significa la identificacion que tendra el jugador por cierta cantidad de tiempo definida arriba
 
-function onUse(player, item, fromPos, target, toPos, isHotkey)  --- funciona USAR(hacerclick)
-    local lastAccess = player:getStorageValue(storage)
+function onUse(cid, item, fromPosition, itemEx, toPosition)
+    local lastAccess = getPlayerStorageValue(cid, storage)
     local tiempoActual = os.time()
-
+ 
     -- Comprobar si ya pasó el tiempo de espera
     if lastAccess == -1 or lastAccess <= tiempoActual then
-        player:setStorageValue(storage, tiempoActual + (60 * 60 * siguienteTiempo))  ---- setiar el tiempo al jugador
-        player:sendTextMessage(MESSAGE_INFO_DESCR, 'Has conseguido acceso a Miss Fortune Zone Tienes 5 Dias Para Farmear la Skin') --- mensaje al jugador
-        player:getPosition():sendMagicEffect(CONST_ME_FIREWORK_YELLOW) --- efecto sobre el jugador
-        item:remove(1)
+        setPlayerStorageValue(cid, storage, tiempoActual + (60 * 60 * siguienteTiempo))  ---- setiar el tiempo al jugador
+        doPlayerSendTextMessage(cid, MESSAGE_INFO_DESCR, 'Has conseguido acceso a Miss Fortune Zone Tienes 5 Dias Para Farmear la Skin') --- mensaje al jugador
+        doSendMagicEffect(getCreaturePosition(cid), CONST_ME_FIREWORK_YELLOW) --- efecto sobre el jugador
+        doRemoveItem(item.uid, 1)
     else
         local tiempoRestante = math.floor((lastAccess - tiempoActual) / 60) -- Convertir segundos restantes a minutos
         local horasRestantes = math.floor(tiempoRestante / 60)
@@ -22,7 +22,7 @@ function onUse(player, item, fromPos, target, toPos, isHotkey)  --- funciona USA
         end
 
         mensaje = mensaje .. ' ' .. minutosRestantes .. ' minutos para Poder Usar otra vez el Objeto Sagrado'
-        player:sendTextMessage(MESSAGE_INFO_DESCR, mensaje)
+        doPlayerSendTextMessage(cid, MESSAGE_INFO_DESCR, mensaje)
     end
 
     return true
